@@ -35,11 +35,18 @@ Route::post('/v1/bill/update', [BillController::class, 'update']);
 Route::get('/v1/bill/{id}', [BillController::class, 'item']);
 Route::get('/v1/bill/{id}/delete', [BillController::class, 'delete']);
 Route::get('/v1/bill/list', [BillController::class, 'list']);
+Route::get('/v1/bill/{id}/payments', [BillController::class, 'payments']);
 
 Route::post('/v1/request/add', [RequestController::class, 'add']);
 Route::post('/v1/request/update', [RequestController::class, 'update']);
 Route::get('/v1/request/{id}', [RequestController::class, 'item']);
 Route::get('/v1/request/{id}/delete', [RequestController::class, 'delete']);
 Route::get('/v1/request/list', [RequestController::class, 'list']);
+Route::get('/v1/request/{id}/bills', [BillController::class, 'listByRequest']);
 
 Route::get('/v1/info', [InfoController::class, 'list']);
+
+Route::post('/v1/bill/add', [BillController::class, 'add']);
+Route::post('/v1/bill/update', [BillController::class, 'update']);
+Route::get('/v1/bill/{id}', [BillController::class, 'item']);
+Route::get('/v1/bill/{id}/delete', [BillController::class, 'delete']);

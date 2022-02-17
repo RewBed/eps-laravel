@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bill;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -98,5 +99,27 @@ class BillController extends Controller
     public function listByProject(int $projectID) : JsonResponse {
         $projects = Bill::where('projectID', $projectID)->paginate($this->billsOnPage);
         return response()->json(['bills' => $projects]);
+    }
+
+    /**
+     * Список счетов по заявки
+     *
+     * @param int $requestID
+     * @return JsonResponse
+     */
+    public function listByRequest(int $requestID) : JsonResponse {
+        $bills = Bill::where('requestID', $requestID)->paginate($this->billsOnPage);
+        return response()->json(['bills' => $bills]);
+    }
+
+    /**
+     * Список оплат по счету
+     *
+     * @param int $billID
+     * @return JsonResponse
+     */
+    public function payments(int $billID) : JsonResponse {
+        $payments = Payment::where('billID', $billID)->paginate($this->billsOnPage);
+        return response()->json(['payments' => $payments]);
     }
 }
