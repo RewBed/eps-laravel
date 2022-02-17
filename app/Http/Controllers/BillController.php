@@ -25,6 +25,7 @@ class BillController extends Controller
     public function add(Request $request) : JsonResponse {
         $validated = $request->validate([
             'name' => ['required', 'filled', 'max:255'],
+            'requestID' => ['required', 'integer'],
             'projectID' => ['required', 'integer']
         ]);
 
