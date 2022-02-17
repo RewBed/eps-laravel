@@ -85,7 +85,8 @@ class RequestController extends Controller
      * @return JsonResponse
      */
     public function list() : JsonResponse {
-        $rq = RequestItem::paginate($this->requestOnPage);
+        $rq = RequestItem::leftJoin('projects', 'requests.projectID', '=', 'projects.id')
+            ->paginate($this->requestOnPage, ['projects.name as projectName', 'requests.*', 'projects.id as projectID']);
         return response()->json(['requests' => $rq]);
     }
 
@@ -96,7 +97,9 @@ class RequestController extends Controller
      * @return JsonResponse
      */
     public function listByProject(int $projectID) : JsonResponse {
-        $rq = RequestItem::where('projectID', $projectID)->paginate($this->requestOnPage);
+        $rq = RequestItem::where('projectID', $projectID)
+            ->leftJoin('projects', 'requests.projectID', '=', 'projects.id')
+            ->paginate($this->requestOnPage, ['projects.name as projectName', 'requests.*', 'projects.id as projectID']);
         return response()->json(['requests' => $rq]);
     }
 }
